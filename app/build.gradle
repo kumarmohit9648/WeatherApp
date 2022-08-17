@@ -1,0 +1,137 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-parcelize'
+    id 'kotlin-kapt'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+}
+
+android {
+    compileSdkVersion 31
+
+    defaultConfig {
+        applicationId "com.mohit.weatherapp"
+        minSdkVersion 26
+        targetSdkVersion 31
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    testOptions {
+        unitTests.includeAndroidResources = true
+    }
+
+    buildFeatures {
+        dataBinding true
+        viewBinding true
+    }
+
+    kotlinOptions {
+        freeCompilerArgs += [
+                "-Xjvm-default=all",
+        ]
+    }
+
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
+
+    secrets {
+        propertiesFileName "secure.properties"
+    }
+}
+
+dependencies {
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation "androidx.fragment:fragment-ktx:1.5.1"
+    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.11.1'
+    implementation 'androidx.multidex:multidex:2.0.1'
+
+    // Retrofit APIs
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
+
+    // Arch Components
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1'
+
+    // Dagger2 - We are going to use dagger.android which includes support
+    // for Activity and fragment injection so we need to include the following dependencies.
+    implementation 'com.google.dagger:dagger-android:2.21'
+    implementation 'com.google.dagger:dagger-android-support:2.21'
+    implementation project(path: ':weather-sdk')
+    kapt 'com.google.dagger:dagger-compiler:2.21'
+    kapt 'com.google.dagger:dagger-android-processor:2.21'
+
+    // Room DB
+    def room_version = "2.2.1"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+
+    //Places
+    implementation 'com.google.android.libraries.places:places:2.6.0'
+    implementation 'com.google.android.gms:play-services-maps:18.1.0'
+    //implementation 'com.google.places.android:places-ktx:0.4.0'
+
+    // JUnit 4 framework
+    testImplementation 'junit:junit:4.13.2'
+    // Robolectric environment
+    testImplementation 'androidx.test:core:1.4.0'
+    testImplementation 'androidx.test:runner:1.4.0'
+    testImplementation 'androidx.test:core-ktx:1.4.0'
+    testImplementation 'org.robolectric:robolectric:4.7.3'
+    // Mockito framework
+    testImplementation 'org.mockito:mockito-core:4.5.1'
+    // Fluent assertions for Java and Android
+    testImplementation 'com.google.truth:truth:1.0.1'
+    // Mock web server
+    testImplementation 'com.squareup.okhttp3:mockwebserver:4.9.0'
+    // Dagger2 test dependencies
+    testImplementation 'com.google.dagger:dagger-android:2.21'
+    testImplementation 'com.google.dagger:dagger-android-support:2.21'
+    kaptTest 'com.google.dagger:dagger-compiler:2.21'
+    kaptTest 'com.google.dagger:dagger-android-processor:2.21'
+
+    testImplementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+    testImplementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
+    testImplementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
+    testImplementation 'androidx.arch.core:core-testing:2.1.0'
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1'
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1'
+}
+
+tasks.withType(Test) {
+    systemProperty "robolectric.logging", "stdout"
+}
+
+kapt {
+    correctErrorTypes true
+}

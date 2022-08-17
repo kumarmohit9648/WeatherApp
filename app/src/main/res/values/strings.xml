@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Weather App</string>
+    <string name="app_info">App Info</string>
+    <string name="error_invalid_access_token">Invalid session token.</string>
+    <string name="error_generic_failure">Something went wrong.</string>
+    <string name="error_server_error">Internal server error.</string>
+    <string name="error_internet_unavailable">Internet unavailable.</string>
+    <string name="error_socket_timeout">Socket timeout.</string>
+    <string name="add_location">Add Location</string>
+    <string name="msg_location_deleted">%1$s was Deleted.</string>
+    <string name="msg_no_locations">Tap on the map to add locations</string>
+    <string name="msg_no_weather_info">No weather info</string>
+    <string name="msg_no_forecast_info">No forecast info</string>
+    <string name="msg_loading">Loading..</string>
+    <string name="msg_failed_to_get_weather_info">Failed to get weather info.</string>
+
+</resources>
